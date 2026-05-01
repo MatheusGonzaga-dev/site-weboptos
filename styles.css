@@ -1610,18 +1610,19 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 52px;
+    --header-h: 58px;
   }
 
   .nav {
-    padding: 8px 4%;
+    padding: 10px 4%;
     position: relative;
+    min-height: var(--header-h);
   }
 
   #header .logo-img {
-    height: 34px;
-    max-height: 34px;
-    max-width: min(168px, 52vw);
+    height: 42px;
+    max-height: 42px;
+    max-width: min(220px, 72vw);
   }
 
   .nav-desktop {
@@ -1632,6 +1633,19 @@ footer {
     display: flex;
     position: static;
     transform: none;
+    gap: 6px;
+    padding: 10px;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .hamburger span {
+    width: 28px;
+    height: 3px;
+    border-radius: 3px;
   }
   .features-grid  { grid-template-columns: 1fr; }
   .commitments-grid { grid-template-columns: 1fr; }

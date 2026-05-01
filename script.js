@@ -156,9 +156,9 @@
   btn.addEventListener('click', () => {
     menu.classList.toggle('open');
     const open = menu.classList.contains('open');
-    btn.querySelectorAll('span')[0].style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+    btn.querySelectorAll('span')[0].style.transform = open ? 'translateY(9px) rotate(45deg)' : '';
     btn.querySelectorAll('span')[1].style.opacity   = open ? '0' : '';
-    btn.querySelectorAll('span')[2].style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
+    btn.querySelectorAll('span')[2].style.transform = open ? 'translateY(-9px) rotate(-45deg)' : '';
   });
 
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
