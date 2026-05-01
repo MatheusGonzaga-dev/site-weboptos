@@ -225,7 +225,7 @@ body:hover .cursor-dot { opacity: 1; }
    HEADER / NAV
 ══════════════════════════════════════ */
 :root {
-  --header-h: 72px;
+  --header-h: 88px;
 }
 
 #header {
@@ -259,7 +259,7 @@ body:hover .cursor-dot { opacity: 1; }
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   column-gap: 16px;
-  padding: 10px 4%;
+  padding: 8px 4%;
   width: 100%;
   max-width: 100%;
   min-height: var(--header-h);
@@ -287,15 +287,16 @@ body:hover .cursor-dot { opacity: 1; }
   grid-column: 1;
   justify-self: start;
   flex-shrink: 0;
-  max-width: min(300px, 55vw);
+  /* ~15–20% da largura da viewport em telas largas (marca bem visível) */
+  max-width: min(520px, 20vw);
 }
 
-/* Logo do header: altura fixa + limite de largura (PNG horizontal não ocupa meia tela) */
+/* Logo do header: ocupa quase toda a altura da barra; largura até ~20vw */
 #header .logo-img {
   display: block;
-  height: 50px;
+  height: clamp(56px, 5.5vw, 76px);
   width: auto;
-  max-height: 50px;
+  max-height: 76px;
   max-width: 100%;
   object-fit: contain;
   object-position: left center;
@@ -1610,7 +1611,7 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 66px;
+    --header-h: 72px;
   }
 
   .nav {
@@ -1619,10 +1620,14 @@ footer {
     min-height: var(--header-h);
   }
 
+  .logo {
+    max-width: min(280px, 72vw);
+  }
+
   #header .logo-img {
-    height: 48px;
-    max-height: 48px;
-    max-width: min(260px, 78vw);
+    height: 52px;
+    max-height: 52px;
+    max-width: 100%;
   }
 
   .nav-desktop {
