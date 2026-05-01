@@ -224,39 +224,57 @@ body:hover .cursor-dot { opacity: 1; }
 /* ══════════════════════════════════════
    HEADER / NAV
 ══════════════════════════════════════ */
+:root {
+  --header-h: 58px;
+}
+
 #header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  z-index: 1000;
-  transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
-  border-bottom: 1px solid transparent;
+  z-index: 5000;
+  min-height: var(--header-h);
+  box-sizing: border-box;
+  transition: background 0.35s, backdrop-filter 0.35s, border-color 0.35s, box-shadow 0.35s;
+  /* Barra sempre visível no topo — evita sensação de menu “flutuando” sobre o hero */
+  background: rgba(5, 11, 24, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 #header.scrolled {
-  background: rgba(5,11,24,0.85);
-  backdrop-filter: blur(20px);
+  background: rgba(5, 11, 24, 0.96);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
   border-bottom-color: var(--border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 .nav {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  justify-content: flex-start;
-  gap: 24px;
-  padding: 16px 4%;
+  column-gap: 16px;
+  padding: 8px 4%;
   width: 100%;
-  flex-wrap: nowrap;
+  max-width: 100%;
+  min-height: var(--header-h);
+  box-sizing: border-box;
 }
 
 .nav-desktop {
   display: flex;
   align-items: center;
-  gap: 28px;
-  margin-left: auto;
-  flex-shrink: 0;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+  grid-column: 2;
+  justify-self: end;
+  min-width: 0;
 }
 
 .logo {
@@ -266,14 +284,30 @@ body:hover .cursor-dot { opacity: 1; }
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.5px;
-  z-index: 10;
+  grid-column: 1;
+  justify-self: start;
+  flex-shrink: 0;
+  max-width: min(200px, 46vw);
 }
 
-.logo-img {
-  height: 80px;
+/* Logo do header: altura fixa + limite de largura (PNG horizontal não ocupa meia tela) */
+#header .logo-img {
+  display: block;
+  height: 38px;
+  width: auto;
+  max-height: 38px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transition: var(--transition);
+}
+
+.footer-brand .logo-img {
+  height: 44px;
+  max-height: 44px;
+  max-width: 200px;
   width: auto;
   object-fit: contain;
-  transition: var(--transition);
 }
 
 .logo strong { font-weight: 700; }
@@ -323,7 +357,8 @@ body:hover .cursor-dot { opacity: 1; }
   gap: 5px;
   background: none;
   padding: 4px;
-  margin-left: auto;
+  grid-column: 2;
+  justify-self: end;
   flex-shrink: 0;
 }
 
@@ -358,7 +393,7 @@ body:hover .cursor-dot { opacity: 1; }
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 140px 0 80px;
+  padding: calc(var(--header-h) + 56px) 0 80px;
   position: relative;
   overflow: hidden;
 }
@@ -1574,22 +1609,29 @@ footer {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --header-h: 52px;
+  }
+
   .nav {
-    justify-content: flex-start;
-    padding: 12px 4%;
+    padding: 8px 4%;
     position: relative;
   }
-  .logo-img {
-    height: 50px;
+
+  #header .logo-img {
+    height: 34px;
+    max-height: 34px;
+    max-width: min(168px, 52vw);
   }
+
   .nav-desktop {
     display: none;
   }
+
   .hamburger {
     display: flex;
     position: static;
     transform: none;
-    margin-left: auto;
   }
   .features-grid  { grid-template-columns: 1fr; }
   .commitments-grid { grid-template-columns: 1fr; }
@@ -1598,7 +1640,20 @@ footer {
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
   .stat-row { grid-template-columns: 1fr; gap: 8px; }
   .form-row { grid-template-columns: 1fr; }
-  .hero { padding: 140px 0 60px; }
+  .hero { padding: calc(var(--header-h) + 40px) 0 60px; }
+  /* Hero em coluna única: afasta o mockup do texto inicial */
+  .hero-grid {
+    gap: 88px;
+  }
+  .hero-visual {
+    margin-top: 4px;
+    padding-top: 8px;
+  }
+  /* Badges flutuantes menos “subindo” sobre o bloco de cima */
+  .float-card-1 {
+    top: -6px;
+    right: -8px;
+  }
   body { cursor: auto; }
   .cursor-dot, .cursor-outline { display: none; }
 }
