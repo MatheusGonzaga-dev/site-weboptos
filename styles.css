@@ -1584,7 +1584,7 @@ footer {
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
   .stat-row { grid-template-columns: 1fr; gap: 8px; }
   .form-row { grid-template-columns: 1fr; }
-  .hero { padding: 120px 0 60px; }
+  .hero { padding: 180px 0 60px; }
   body { cursor: auto; }
   .cursor-dot, .cursor-outline { display: none; }
 }
