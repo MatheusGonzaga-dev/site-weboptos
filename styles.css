@@ -244,8 +244,8 @@ body:hover .cursor-dot { opacity: 1; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 4%;
+  width: 100%;
 }
 
 .logo {
@@ -255,6 +255,16 @@ body:hover .cursor-dot { opacity: 1; }
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.5px;
+  z-index: 10;
+}
+
+.logo-img {
+  height: 180px;
+  width: auto;
+  object-fit: contain;
+  transform: scale(1.4);
+  transform-origin: left center;
+  transition: var(--transition);
 }
 
 .logo strong { font-weight: 700; }
@@ -1550,8 +1560,23 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .nav {
+    justify-content: center;
+    padding: 10px 4%;
+    position: relative;
+  }
+  .logo-img {
+    height: 80px;
+    transform: scale(1.1);
+    transform-origin: center;
+  }
+  .hamburger {
+    position: absolute;
+    right: 4%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
   .nav-links, .nav-actions { display: none; }
-  .hamburger { display: flex; }
   .features-grid  { grid-template-columns: 1fr; }
   .commitments-grid { grid-template-columns: 1fr; }
   .cta-card { padding: 48px 24px; }
