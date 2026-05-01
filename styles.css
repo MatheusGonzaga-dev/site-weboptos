@@ -225,7 +225,7 @@ body:hover .cursor-dot { opacity: 1; }
    HEADER / NAV
 ══════════════════════════════════════ */
 :root {
-  --header-h: 88px;
+  --header-h: 140px;
 }
 
 #header {
@@ -287,16 +287,16 @@ body:hover .cursor-dot { opacity: 1; }
   grid-column: 1;
   justify-self: start;
   flex-shrink: 0;
-  /* ~15–20% da largura da viewport em telas largas (marca bem visível) */
-  max-width: min(520px, 20vw);
+  /* Marca bem destacada (quase metade da largura em telas grandes) */
+  max-width: min(920px, 48vw);
 }
 
-/* Logo do header: ocupa quase toda a altura da barra; largura até ~20vw */
+/* Logo do header: o maior possível sem estourar a barra */
 #header .logo-img {
   display: block;
-  height: clamp(56px, 5.5vw, 76px);
+  height: clamp(96px, 16vmin, 140px);
   width: auto;
-  max-height: 76px;
+  max-height: 140px;
   max-width: 100%;
   object-fit: contain;
   object-position: left center;
@@ -309,6 +309,35 @@ body:hover .cursor-dot { opacity: 1; }
   max-width: 200px;
   width: auto;
   object-fit: contain;
+}
+
+/* Laptop / telas médias: logo ainda grande, menu não colide */
+@media (max-width: 1240px) {
+  :root {
+    --header-h: 124px;
+  }
+
+  .logo {
+    max-width: min(680px, 52vw);
+  }
+
+  #header .logo-img {
+    height: clamp(84px, 13vmin, 118px);
+    max-height: 118px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .nav-actions .btn-primary {
+    padding: 10px 18px;
+    font-size: 13px;
+  }
 }
 
 .logo strong { font-weight: 700; }
@@ -1592,9 +1621,9 @@ footer {
    RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width: 1024px) {
-  .nav-links { gap: 16px; }
-  .nav-links a { font-size: 13px; }
-  .nav-desktop { gap: 16px; }
+  .nav-links { gap: 11px; }
+  .nav-links a { font-size: 12px; }
+  .nav-desktop { gap: 12px; }
   .hero-grid      { grid-template-columns: 1fr; gap: 60px; }
   .features-grid  { grid-template-columns: repeat(2, 1fr); }
   .steps-grid     { grid-template-columns: 1fr; }
@@ -1611,7 +1640,7 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 72px;
+    --header-h: 92px;
   }
 
   .nav {
@@ -1621,12 +1650,12 @@ footer {
   }
 
   .logo {
-    max-width: min(280px, 72vw);
+    max-width: min(400px, 88vw);
   }
 
   #header .logo-img {
-    height: 52px;
-    max-height: 52px;
+    height: 72px;
+    max-height: 72px;
     max-width: 100%;
   }
 
