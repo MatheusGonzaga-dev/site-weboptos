@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weboptos — O Sistema Completo para Optometristas</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ─── Cursor personalizado ─── -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+  <!-- ─── Canvas de partículas ─── -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ══════════════════════════════════════
+       HEADER / NAV
+  ══════════════════════════════════════ -->
+  <header id="header">
+    <nav class="nav" style="width: 100%; padding-left: 4%; padding-right: 4%;">
+      <a href="#" class="logo">
+        <img src="logo.png" alt="Weboptos Logo" style="height: 180px; width: auto; object-fit: contain; transform: scale(1.4); transform-origin: left center;" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#features">Funcionalidades</a></li>
+        <li><a href="#how-it-works">Como Funciona</a></li>
+        <li><a href="#pricing">Preço</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#contact">Contato</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#pricing" class="btn-primary">Começar Grátis</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu">
+      <ul>
+        <li><a href="#features">Funcionalidades</a></li>
+        <li><a href="#how-it-works">Como Funciona</a></li>
+        <li><a href="#pricing">Preço</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#contact">Contato</a></li>
+        <li><a href="#pricing" class="btn-primary">Começar Grátis</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══════════════════════════════════════
+         HERO SECTION
+    ══════════════════════════════════════ -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content" data-aos="fade-right">
+          <h1 class="hero-title">
+            O Sistema Mais
+            <span class="gradient-text">Inteligente</span>
+            para Sua Clínica
+          </h1>
+          <p class="hero-subtitle">
+            Gerencie pacientes, agendamentos, prontuários e financeiro em uma única plataforma. Feito exclusivamente para optometristas que querem crescer.
+          </p>
+          <div class="hero-actions">
+            <a href="#pricing" class="btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Teste Grátis por 14 Dias
+            </a>
+          </div>
+          <div class="hero-trust">
+            <div class="hero-trust-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="hero-trust-text"><strong>Menos planilha, mais tempo com o paciente.</strong> Agenda, prontuário e financeiro integrados em uma plataforma feita para clínicas de visão. <span class="hero-trust-muted">Teste grátis por 14 dias — sem cartão.</span></p>
+          </div>
+        </div>
+
+        <div class="hero-visual" data-aos="fade-left">
+          <div class="dashboard-mockup">
+            <div class="mockup-header">
+              <div class="dots"><span></span><span></span><span></span></div>
+              <div class="mockup-title">Dashboard — Weboptos</div>
+            </div>
+            <div class="mockup-body">
+              <!-- Stats Row -->
+              <div class="stat-row">
+                <div class="stat-card">
+                  <div class="stat-icon" style="background:rgba(0,102,255,0.15);color:#0066ff">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/></svg>
+                  </div>
+                  <div>
+                    <div class="stat-value counter" data-target="1284">0</div>
+                    <div class="stat-label">Pacientes</div>
+                  </div>
+                  <div class="stat-badge up">+12%</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon" style="background:rgba(0,212,255,0.15);color:#00d4ff">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+                  </div>
+                  <div>
+                    <div class="stat-value counter" data-target="47">0</div>
+                    <div class="stat-label">Consultas Hoje</div>
+                  </div>
+                  <div class="stat-badge up">+8%</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon" style="background:rgba(0,212,100,0.15);color:#00d464">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2"/></svg>
+                  </div>
+                  <div>
+                    <div class="stat-value">R$<span class="counter" data-target="28450">0</span></div>
+                    <div class="stat-label">Faturamento</div>
+                  </div>
+                  <div class="stat-badge up">+23%</div>
+                </div>
+              </div>
+
+              <!-- Chart Area -->
+              <div class="chart-area">
+                <div class="chart-header">
+                  <span class="chart-title">Consultas por mês</span>
+                  <span class="chart-period">2024</span>
+                </div>
+                <div class="chart-bars">
+                  <div class="bar-group">
+                    <div class="bar" style="--h:45%"></div><span>Jan</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="--h:60%"></div><span>Fev</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="--h:52%"></div><span>Mar</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="--h:78%"></div><span>Abr</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="--h:65%"></div><span>Mai</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar active" style="--h:90%"></div><span>Jun</span>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar" style="--h:82%"></div><span>Jul</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent patients -->
+              <div class="recent-list">
+                <div class="recent-header">Próximas Consultas</div>
+                <div class="recent-item">
+                  <img src="https://i.pravatar.cc/32?img=12" alt="paciente"/>
+                  <div class="recent-info">
+                    <span class="recent-name">Maria Silva</span>
+                    <span class="recent-time">09:30 • Retorno</span>
+                  </div>
+                  <span class="recent-status confirmed">Confirmado</span>
+                </div>
+                <div class="recent-item">
+                  <img src="https://i.pravatar.cc/32?img=38" alt="paciente"/>
+                  <div class="recent-info">
+                    <span class="recent-name">João Pereira</span>
+                    <span class="recent-time">10:15 • Avaliação</span>
+                  </div>
+                  <span class="recent-status pending">Aguardando</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating cards -->
+          <div class="float-card float-card-1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#00d464" stroke-width="2"/><polyline points="22 4 12 14.01 9 11.01" stroke="#00d464" stroke-width="2"/></svg>
+            <span>IA Ativada</span>
+          </div>
+          <div class="float-card float-card-2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 20V10M12 20V4M6 20v-6" stroke="#0066ff" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>+68% crescimento</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>scroll</span>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         LOGOS / CONFIANÇA
+    ══════════════════════════════════════ -->
+    <section class="trust-section">
+      <div class="container">
+        <p class="trust-label">Integrado com as principais plataformas</p>
+        <div class="logos-track">
+          <div class="logos-slide">
+            <span class="logo-item">CFO Brasil</span>
+            <span class="logo-item">TUSS</span>
+            <span class="logo-item">ANS</span>
+            <span class="logo-item">WhatsApp Business</span>
+            <span class="logo-item">Google Calendar</span>
+            <span class="logo-item">Mercado Pago</span>
+            <span class="logo-item">Stripe</span>
+            <span class="logo-item">NF-e</span>
+            <span class="logo-item">CFO Brasil</span>
+            <span class="logo-item">TUSS</span>
+            <span class="logo-item">ANS</span>
+            <span class="logo-item">WhatsApp Business</span>
+            <span class="logo-item">Google Calendar</span>
+            <span class="logo-item">Mercado Pago</span>
+            <span class="logo-item">Stripe</span>
+            <span class="logo-item">NF-e</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         STATS SECTION
+    ══════════════════════════════════════ -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+            <div class="stat-number"><span class="counter" data-target="14">0</span></div>
+            <div class="stat-desc">Dias de teste grátis</div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-number"><span class="counter" data-target="100">0</span>%</div>
+            <div class="stat-desc">Foco em clínicas de visão</div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-number stat-number--plain">24/7</div>
+            <div class="stat-desc">Acesso na nuvem</div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-number stat-number--plain">LGPD</div>
+            <div class="stat-desc">Privacidade e segurança</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FEATURES
+    ══════════════════════════════════════ -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="section-label" data-aos="fade-up">Funcionalidades</div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+          Tudo que sua clínica precisa,<br/>
+          <span class="gradient-text">em um só lugar</span>
+        </h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">
+          Do primeiro atendimento ao pós-venda, o Weboptos cobre cada etapa da sua jornada com tecnologia de ponta.
+        </p>
+
+        <div class="features-grid">
+
+          <div class="feature-card featured" data-aos="fade-up" data-aos-delay="0">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Prontuário Eletrônico</h3>
+            <p>Histórico completo do paciente com refração, biomicroscopia, retinografia e muito mais. Acesse em qualquer dispositivo, a qualquer hora.</p>
+            <div class="feature-tag">Mais usado</div>
+          </div>
+
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Agendamento Online</h3>
+            <p>Pacientes agendam pelo link personalizado 24h/7. Lembretes automáticos por WhatsApp reduzem faltas em até 70%.</p>
+          </div>
+
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>IA para Diagnóstico</h3>
+            <p>Inteligência artificial que auxilia na interpretação de resultados e sugere condutas baseadas em evidências científicas atualizadas.</p>
+            <div class="feature-tag new">Novo</div>
+          </div>
+
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Gestão Financeira</h3>
+            <p>Controle receitas, despesas e repasses com relatórios em tempo real. Integração com boleto, PIX e cartão de crédito.</p>
+          </div>
+
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>WhatsApp Automático</h3>
+            <p>Confirmações, lembretes, envio de prescrição direto a óticas e campanhas de retorno enviadas automaticamente pelo WhatsApp.</p>
+          </div>
+
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="feature-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Relatórios e Analytics</h3>
+            <p>Dashboards completos com métricas de produtividade, satisfação dos pacientes e projeções de crescimento para sua clínica.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         HOW IT WORKS
+    ══════════════════════════════════════ -->
+    <section class="how-it-works" id="how-it-works">
+      <div class="container">
+        <div class="section-label" data-aos="fade-up">Como Funciona</div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+          Simples de começar,<br/>
+          <span class="gradient-text">poderoso para crescer</span>
+        </h2>
+
+        <div class="steps-grid">
+          <div class="step" data-aos="fade-right" data-aos-delay="0">
+            <div class="step-number">01</div>
+            <div class="step-content">
+              <h3>Crie sua conta</h3>
+              <p>Cadastre-se em menos de 2 minutos sem precisar de cartão de crédito. Acesso imediato a todas as funcionalidades por 14 dias.</p>
+            </div>
+          </div>
+          <div class="step" data-aos="fade-right" data-aos-delay="150">
+            <div class="step-number">02</div>
+            <div class="step-content">
+              <h3>Configure sua clínica</h3>
+              <p>Importe seus pacientes, configure horários e personalize o sistema com a identidade visual da sua clínica em minutos.</p>
+            </div>
+          </div>
+          <div class="step" data-aos="fade-right" data-aos-delay="300">
+            <div class="step-number">03</div>
+            <div class="step-content">
+              <h3>Atenda e cresça</h3>
+              <p>Comece a atender com muito mais agilidade. Acompanhe métricas em tempo real e veja seu consultório decolar.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         PRICING
+    ══════════════════════════════════════ -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <div class="section-label" data-aos="fade-up">Preço</div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+          Um plano, <span class="gradient-text">tudo incluso</span>
+        </h2>
+        <p class="section-subtitle pricing-lead" data-aos="fade-up" data-aos-delay="200">
+          <strong>R$ 149,00 por mês.</strong> Modelo pré-pago: <strong>pagou, usou</strong> — com a mensalidade em dia você mantém o acesso completo ao sistema. Sem taxas escondidas, sem fidelidade. Teste grátis por 14 dias antes de assinar.
+        </p>
+
+        <div class="pricing-grid pricing-grid--single">
+
+          <div class="pricing-card popular" data-aos="fade-up" data-aos-delay="300">
+            <div class="popular-badge">Pré-pago</div>
+            <div class="plan-name">Weboptos</div>
+            <div class="plan-desc">Plano único para sua clínica</div>
+            <div class="plan-price">
+              <span class="currency">R$</span>
+              <span class="amount">149,00</span>
+              <span class="period">/mês</span>
+            </div>
+            <p class="plan-prepaid-note">Cobrança mensal. Enquanto estiver pago, você usa à vontade.</p>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> Pacientes ilimitados</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> Prontuário eletrônico completo</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> Agendamento online e lembretes</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> IA para diagnóstico assistido</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> WhatsApp automático</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> Gestão financeira e relatórios</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#00d464" stroke-width="2" stroke-linecap="round"/></svg> Suporte em português</li>
+            </ul>
+            <a href="#contact" class="btn-primary btn-full">Começar — teste 14 dias grátis</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         COMPROMISSOS
+    ══════════════════════════════════════ -->
+    <section class="commitments" id="diferenciais">
+      <div class="container">
+        <div class="section-label" data-aos="fade-up">Diferenciais</div>
+        <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+          Tecnologia que acompanha <span class="gradient-text">seu consultório</span>
+        </h2>
+        <p class="section-subtitle commitments-intro" data-aos="fade-up" data-aos-delay="200">
+          Do primeiro contato ao pós-consulta, o Weboptos une agilidade, segurança dos dados e uma experiência pensada para quem cuida da visão todos os dias.
+        </p>
+
+        <div class="commitments-grid">
+          <div class="commitment-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="commitment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Fluxo pensado para a clínica</h3>
+            <p>Telas e processos desenhados para o dia a dia do optometrista: menos cliques, menos retrabalho e mais foco no paciente.</p>
+          </div>
+          <div class="commitment-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="commitment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Privacidade em primeiro lugar</h3>
+            <p>Dados de pacientes exigem responsabilidade. Trabalhamos com boas práticas de segurança e conformidade com a LGPD.</p>
+          </div>
+          <div class="commitment-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="commitment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Teste sem pressão</h3>
+            <p>14 dias para explorar tudo, sem cartão e sem fidelidade. Você decide se faz sentido para a sua clínica.</p>
+          </div>
+          <div class="commitment-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="commitment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Suporte humano</h3>
+            <p>Quando precisar de ajuda, fale com gente que entende o contexto — não só um robô genérico.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CTA SECTION
+    ══════════════════════════════════════ -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card" data-aos="zoom-in">
+          <div class="cta-glow"></div>
+          <div class="section-label">Comece Hoje</div>
+          <h2>Pronto para transformar<br/><span class="gradient-text">sua clínica?</span></h2>
+          <p>Experimente todas as funções por 14 dias, sem cartão e sem fidelidade. Veja na prática como organizar agenda, prontuário e financeiro em um só lugar.</p>
+          <div class="cta-actions">
+            <a href="#pricing" class="btn-primary btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Começar Grátis — 14 dias
+            </a>
+            <a href="#contact" class="btn-ghost btn-lg">Falar com especialista</a>
+          </div>
+          <p class="cta-note">
+            <span>Sem cartão de crédito</span>
+            <span>Cancele quando quiser</span>
+            <span>Suporte 24 horas</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         CONTACT
+    ══════════════════════════════════════ -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info" data-aos="fade-right">
+            <div class="section-label">Contato</div>
+            <h2>Fale com nossa <span class="gradient-text">equipe</span></h2>
+            <p>Nosso time está pronto para tirar suas dúvidas sobre o Weboptos e como começar pelo teste gratuito.</p>
+
+            <div class="contact-items">
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.06 6.06l1.27-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div>
+                  <strong>Telefone / WhatsApp</strong>
+                  <a href="https://wa.me/5511942131306" target="_blank" rel="noopener noreferrer">(11) 94213-1306</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div>
+                  <strong>E-mail</strong>
+                  <span>contato@weboptos.com.br</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-wrap" data-aos="fade-left">
+            <form class="contact-form" id="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nome</label>
+                  <input type="text" name="nome" placeholder="Seu nome" required />
+                </div>
+                <div class="form-group">
+                  <label>E-mail</label>
+                  <input type="email" name="email" placeholder="seu@email.com" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>WhatsApp</label>
+                <input type="tel" name="whatsapp" placeholder="(11) 9 9999-9999" />
+              </div>
+              <div class="form-group">
+                <label>Mensagem</label>
+                <textarea name="mensagem" placeholder="Como podemos ajudar?" rows="4"></textarea>
+              </div>
+              <button type="submit" class="btn-primary btn-full">Enviar Mensagem</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <img src="logo.png" alt="Weboptos Logo" style="height: 180px; width: auto; object-fit: contain; transform: scale(1.4); transform-origin: left center;" />
+          </a>
+          <p>O sistema mais completo e inteligente para optometristas do Brasil.</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="2"/><rect x="2" y="9" width="4" height="12" stroke="currentColor" stroke-width="2"/><circle cx="4" cy="4" r="2" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z" stroke="currentColor" stroke-width="2"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4>Produto</h4>
+          <ul>
+            <li><a href="#features">Funcionalidades</a></li>
+            <li><a href="#pricing">Preços</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Status</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#">Sobre nós</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Carreiras</a></li>
+            <li><a href="#contact">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+            <li><a href="#">LGPD</a></li>
+            <li><a href="#">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Weboptos. Todos os direitos reservados.</p>
+        <p>Feito com ❤️ para optometristas brasileiros</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
