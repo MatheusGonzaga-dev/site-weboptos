@@ -1,0 +1,9 @@
+# Apache (hospedagem compartilhada): reduz cache do HTML para o F5 pegar novo index com ?v= novo.
+# Se o servidor não for Apache, pode apagar este arquivo.
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+  </FilesMatch>
+</IfModule>
