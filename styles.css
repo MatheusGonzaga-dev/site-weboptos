@@ -259,11 +259,9 @@ body:hover .cursor-dot { opacity: 1; }
 }
 
 .logo-img {
-  height: 180px;
+  height: 80px;
   width: auto;
   object-fit: contain;
-  transform: scale(1.4);
-  transform-origin: left center;
   transition: var(--transition);
 }
 
@@ -1566,9 +1564,7 @@ footer {
     position: relative;
   }
   .logo-img {
-    height: 80px;
-    transform: scale(1.1);
-    transform-origin: center;
+    height: 50px;
   }
   .hamburger {
     position: absolute;
@@ -1584,7 +1580,7 @@ footer {
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
   .stat-row { grid-template-columns: 1fr; gap: 8px; }
   .form-row { grid-template-columns: 1fr; }
-  .hero { padding: 180px 0 60px; }
+  .hero { padding: 140px 0 60px; }
   body { cursor: auto; }
   .cursor-dot, .cursor-outline { display: none; }
 }
