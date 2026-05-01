@@ -229,6 +229,7 @@ body:hover .cursor-dot { opacity: 1; }
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   z-index: 1000;
   transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
   border-bottom: 1px solid transparent;
@@ -243,9 +244,19 @@ body:hover .cursor-dot { opacity: 1; }
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 4%;
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 16px 4%;
   width: 100%;
+  flex-wrap: nowrap;
+}
+
+.nav-desktop {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -312,6 +323,8 @@ body:hover .cursor-dot { opacity: 1; }
   gap: 5px;
   background: none;
   padding: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .hamburger span {
@@ -1543,6 +1556,9 @@ footer {
    RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width: 1024px) {
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 13px; }
+  .nav-desktop { gap: 16px; }
   .hero-grid      { grid-template-columns: 1fr; gap: 60px; }
   .features-grid  { grid-template-columns: repeat(2, 1fr); }
   .steps-grid     { grid-template-columns: 1fr; }
@@ -1559,20 +1575,22 @@ footer {
 
 @media (max-width: 768px) {
   .nav {
-    justify-content: center;
-    padding: 10px 4%;
+    justify-content: flex-start;
+    padding: 12px 4%;
     position: relative;
   }
   .logo-img {
     height: 50px;
   }
-  .hamburger {
-    position: absolute;
-    right: 4%;
-    top: 50%;
-    transform: translateY(-50%);
+  .nav-desktop {
+    display: none;
   }
-  .nav-links, .nav-actions { display: none; }
+  .hamburger {
+    display: flex;
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
   .features-grid  { grid-template-columns: 1fr; }
   .commitments-grid { grid-template-columns: 1fr; }
   .cta-card { padding: 48px 24px; }
