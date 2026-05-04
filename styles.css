@@ -1497,8 +1497,10 @@ body:hover .cursor-dot { opacity: 1; }
    APRESENTAÇÃO DO SISTEMA (imagem + texto)
 ══════════════════════════════════════ */
 .system-showcase {
-  padding: 100px 0;
+  padding: 100px 0 80px;
   background: linear-gradient(180deg, transparent, rgba(0,102,255,0.04) 45%, transparent);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title--center {
@@ -1512,7 +1514,7 @@ body:hover .cursor-dot { opacity: 1; }
 
 .system-showcase-lead {
   max-width: 720px;
-  margin: 0 auto 40px;
+  margin: 0 auto 36px;
   text-align: center;
   line-height: 1.75;
   color: var(--text-secondary);
@@ -1535,6 +1537,22 @@ body:hover .cursor-dot { opacity: 1; }
     0 0 100px rgba(0, 102, 255, 0.12);
 }
 
+/* Imagem em largura total da viewport (fora do .container) */
+.system-showcase-frame--full {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0 0 40px;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: 1px solid rgba(0, 102, 255, 0.2);
+  border-bottom: 1px solid rgba(0, 102, 255, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 32px 100px rgba(0, 0, 0, 0.5);
+}
+
 .system-showcase-frame img {
   display: block;
   width: 100%;
@@ -1546,8 +1564,9 @@ body:hover .cursor-dot { opacity: 1; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  max-width: 960px;
-  margin: 0 auto;
+  max-width: none;
+  width: 100%;
+  margin: 0;
   list-style: none;
   padding: 0;
 }
