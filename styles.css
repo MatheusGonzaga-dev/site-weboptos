@@ -225,7 +225,7 @@ body:hover .cursor-dot { opacity: 1; }
    HEADER / NAV
 ══════════════════════════════════════ */
 :root {
-  --header-h: 140px;
+  --header-h: 160px;
 }
 
 #header {
@@ -237,6 +237,7 @@ body:hover .cursor-dot { opacity: 1; }
   z-index: 5000;
   min-height: var(--header-h);
   box-sizing: border-box;
+  overflow: visible;
   transition: background 0.35s, backdrop-filter 0.35s, border-color 0.35s, box-shadow 0.35s;
   /* Barra sempre visível no topo — evita sensação de menu “flutuando” sobre o hero */
   background: rgba(5, 11, 24, 0.92);
@@ -264,6 +265,7 @@ body:hover .cursor-dot { opacity: 1; }
   max-width: 100%;
   min-height: var(--header-h);
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .nav-desktop {
@@ -277,7 +279,7 @@ body:hover .cursor-dot { opacity: 1; }
   min-width: 0;
 }
 
-.logo {
+#header .logo {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -287,19 +289,23 @@ body:hover .cursor-dot { opacity: 1; }
   grid-column: 1;
   justify-self: start;
   flex-shrink: 0;
-  /* Marca bem destacada (quase metade da largura em telas grandes) */
-  max-width: min(920px, 48vw);
+  /* Marca destacada — sem overflow:hidden (cortava o texto com scale no <img>) */
+  max-width: min(1200px, 70vw);
+  overflow: visible;
 }
 
 /* Logo do header: o maior possível sem estourar a barra */
 #header .logo-img {
   display: block;
-  height: clamp(96px, 16vmin, 140px);
+  height: clamp(116px, 19vmin, 168px);
   width: auto;
-  max-height: 140px;
+  max-height: 168px;
   max-width: 100%;
   object-fit: contain;
-  object-position: left center;
+  object-position: left top;
+  /* Margens transparentes no PNG: zoom leve sem cortar o texto */
+  transform: translate(-12%, -8%) scale(1.42);
+  transform-origin: left center;
   transition: var(--transition);
 }
 
@@ -314,16 +320,17 @@ body:hover .cursor-dot { opacity: 1; }
 /* Laptop / telas médias: logo ainda grande, menu não colide */
 @media (max-width: 1240px) {
   :root {
-    --header-h: 124px;
+    --header-h: 138px;
   }
 
-  .logo {
-    max-width: min(680px, 52vw);
+  #header .logo {
+    max-width: min(900px, 72vw);
   }
 
   #header .logo-img {
-    height: clamp(84px, 13vmin, 118px);
-    max-height: 118px;
+    height: clamp(100px, 16vmin, 146px);
+    max-height: 146px;
+    transform: translate(-10%, -7%) scale(1.34);
   }
 
   .nav-links {
@@ -1640,7 +1647,7 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 92px;
+    --header-h: 108px;
   }
 
   .nav {
@@ -1649,14 +1656,15 @@ footer {
     min-height: var(--header-h);
   }
 
-  .logo {
-    max-width: min(400px, 88vw);
+  #header .logo {
+    max-width: min(92vw, 560px);
   }
 
   #header .logo-img {
-    height: 72px;
-    max-height: 72px;
+    height: 88px;
+    max-height: 88px;
     max-width: 100%;
+    transform: translate(-10%, -6%) scale(1.38);
   }
 
   .nav-desktop {
