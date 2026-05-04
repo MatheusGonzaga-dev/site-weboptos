@@ -28,7 +28,7 @@
   }
   animateOutline();
 
-  document.querySelectorAll('a, button, .feature-card, .pricing-card, .commitment-card').forEach(el => {
+  document.querySelectorAll('a, button, .feature-card, .pricing-card, .commitment-card, .system-showcase-points li').forEach(el => {
     el.addEventListener('mouseenter', () => {
       outline.style.width  = '52px';
       outline.style.height = '52px';
