@@ -247,7 +247,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const mensagem = (data.get('mensagem') || '').toString().trim();
 
     const lines = [
-      '*Contato — Weboptos*',
+      '*Contato | Weboptos*',
       `Nome: ${nome}`,
       `E-mail: ${email}`,
     ];
