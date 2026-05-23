@@ -2243,3 +2243,341 @@ footer {
   .hero-actions { flex-direction: column; align-items: stretch; }
   .btn-lg { text-align: center; justify-content: center; }
 }
+
+/* ═══════════════════════════════════════════════
+   SIGNUP MODAL (wizard de cadastro + provisionamento)
+═══════════════════════════════════════════════ */
+.wo-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 16, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 24px;
+  cursor: auto;
+}
+.wo-modal-overlay.open {
+  display: flex;
+  animation: woFadeIn 0.18s ease-out;
+}
+.wo-modal {
+  background: linear-gradient(180deg, rgba(8, 15, 30, 0.98), rgba(5, 11, 24, 0.98));
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 32px;
+  width: 100%;
+  max-width: 460px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 102, 255, 0.18);
+  color: var(--text-primary);
+  animation: woFadeUp 0.24s ease-out;
+}
+.wo-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer;
+}
+.wo-modal-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+.wo-modal h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+  color: var(--text-primary);
+}
+.wo-modal-sub {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin: 0 0 22px;
+}
+
+/* Steps */
+.wo-signup-steps {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.wo-signup-step {
+  flex: 1;
+  text-align: center;
+  padding: 7px 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.wo-signup-step.active {
+  color: var(--text-primary);
+  background: rgba(0, 102, 255, 0.15);
+  border-color: rgba(0, 102, 255, 0.4);
+}
+
+/* Campos */
+.wo-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  position: relative;
+}
+.wo-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.wo-field input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14.5px;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+.wo-field input::placeholder {
+  color: var(--text-muted);
+}
+.wo-field input:focus {
+  border-color: var(--cyan);
+  background: rgba(0, 212, 255, 0.04);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+}
+.wo-field-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.wo-field-password input {
+  padding-right: 44px;
+}
+.wo-field-password button {
+  position: absolute;
+  right: 8px;
+  top: 30px;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+.wo-field-password button:hover {
+  color: var(--cyan);
+}
+
+/* Erros / avisos */
+.wo-form-error {
+  background: rgba(255, 77, 109, 0.1);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  color: #ffb3c1;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  margin-bottom: 14px;
+}
+.wo-warn {
+  background: rgba(255, 191, 36, 0.08);
+  border: 1px solid rgba(255, 191, 36, 0.25);
+  color: #ffd66b;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+/* Botões do modal */
+.wo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition),
+    border-color var(--transition), transform var(--transition), opacity var(--transition);
+}
+.wo-btn[disabled] { opacity: 0.55; cursor: default; }
+.wo-btn:active { transform: translateY(1px); }
+.wo-btn-primary {
+  background: var(--gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(0, 102, 255, 0.28);
+}
+.wo-btn-primary:hover:not([disabled]) {
+  filter: brightness(1.08);
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+}
+.wo-btn-ghost {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+.wo-btn-ghost:hover:not([disabled]) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.wo-btn-block { width: 100%; }
+.wo-btn-lg { padding: 14px 24px; font-size: 15px; }
+.wo-flex-1 { flex: 1; }
+
+.wo-signup-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+/* Resumo da empresa no step 3 */
+.wo-empresa-resumo {
+  font-size: 14px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.wo-text-muted { color: var(--text-secondary); font-size: 13px; }
+
+/* Rodapé "já tem conta" */
+.wo-modal-foot {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+.wo-modal-foot button {
+  background: transparent;
+  border: none;
+  color: var(--cyan);
+  font-weight: 600;
+  padding: 0;
+  font-family: inherit;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+.wo-modal-foot button:hover { text-decoration: underline; }
+
+/* Progress (step 4) */
+.wo-signup-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wo-signup-progress > strong {
+  font-size: 16px;
+  color: var(--text-primary);
+}
+.wo-progress-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  margin: 14px 0 6px;
+}
+.wo-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width 0.45s ease;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+}
+.wo-progress-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.wo-progress-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  color: var(--text-secondary);
+}
+.wo-progress-step.running { color: var(--text-primary); }
+.wo-progress-step.done { color: var(--green); }
+.wo-progress-step.failed { color: var(--red); }
+.wo-progress-icon {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+}
+.wo-progress-step.done .wo-progress-icon {
+  background: rgba(0, 212, 100, 0.15);
+  color: var(--green);
+}
+.wo-progress-step.running .wo-progress-icon {
+  background: rgba(0, 212, 255, 0.18);
+  color: var(--cyan);
+  animation: woSpin 1.4s linear infinite;
+}
+.wo-progress-step.failed .wo-progress-icon {
+  background: rgba(255, 77, 109, 0.18);
+  color: var(--red);
+}
+.wo-progress-msg {
+  margin-top: 8px;
+  font-size: 12.5px;
+}
+
+@keyframes woFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes woFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes woSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 540px) {
+  .wo-modal { padding: 28px 22px 22px; }
+  .wo-modal h2 { font-size: 19px; }
+  .wo-signup-steps { font-size: 11px; }
+}

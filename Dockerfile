@@ -1,10 +1,20 @@
+# ─── Build (Vite) ─────────────────────────────────
+FROM node:20-alpine AS build
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# ─── Runtime (Nginx) ──────────────────────────────
 FROM nginx:alpine
 
-# Copia todos os arquivos do diretório atual para a pasta padrão do Nginx
-COPY . /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expõe a porta 80, que é a padrão do Nginx
+# SPA fallback opcional — caso adicione rotas client-side depois
+RUN printf 'server {\n  listen 80;\n  root /usr/share/nginx/html;\n  index index.html;\n  location / { try_files $uri /index.html; }\n}\n' > /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
-
-# Inicia o servidor
 CMD ["nginx", "-g", "daemon off;"]
