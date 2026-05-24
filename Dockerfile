@@ -2,6 +2,12 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
+# Easypanel passa --build-arg VITE_* ; precisam virar ENV antes do vite build
+ARG VITE_API_URL
+ARG VITE_SISTEMA_URL
+ENV VITE_API_URL=${VITE_API_URL}
+ENV VITE_SISTEMA_URL=${VITE_SISTEMA_URL}
+
 COPY package.json package-lock.json* ./
 RUN npm install
 
