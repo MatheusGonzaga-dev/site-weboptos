@@ -61,7 +61,9 @@ export function useActiveNavLink() {
 /** Smooth scroll para âncoras (offset 80px do header). */
 export function useSmoothAnchors() {
   useEffect(() => {
-    const anchors = document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]');
+    const anchors = document.querySelectorAll<HTMLAnchorElement>(
+      'a[href^="#"]:not([data-open-signup])',
+    );
     const handler = (e: Event) => {
       const a = e.currentTarget as HTMLAnchorElement;
       const href = a.getAttribute('href');

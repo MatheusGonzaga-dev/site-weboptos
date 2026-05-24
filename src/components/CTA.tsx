@@ -16,8 +16,9 @@ export function CTA({ onSignup }: Props) {
           </p>
           <div className="cta-actions">
             <a
-              href="#pricing"
+              href="#cadastro"
               className="btn-primary btn-lg"
+              data-open-signup
               onClick={(e) => { e.preventDefault(); onSignup(); }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>

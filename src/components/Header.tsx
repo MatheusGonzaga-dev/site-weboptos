@@ -29,7 +29,7 @@ export function Header({ onSignup }: Props) {
             <li><a href="#contact">Contato</a></li>
           </ul>
           <div className="nav-actions">
-            <a href="#pricing" className="btn-primary" onClick={handleSignup}>
+            <a href="#cadastro" className="btn-primary" data-open-signup onClick={handleSignup}>
               Começar Grátis
             </a>
           </div>
@@ -54,7 +54,7 @@ export function Header({ onSignup }: Props) {
           <li><a href="#pricing" onClick={close}>Preço</a></li>
           <li><a href="#diferenciais" onClick={close}>Diferenciais</a></li>
           <li><a href="#contact" onClick={close}>Contato</a></li>
-          <li><a href="#pricing" className="btn-primary" onClick={handleSignup}>Começar Grátis</a></li>
+          <li><a href="#cadastro" className="btn-primary" data-open-signup onClick={handleSignup}>Começar Grátis</a></li>
         </ul>
       </div>
     </header>
