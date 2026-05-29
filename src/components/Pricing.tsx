@@ -24,7 +24,7 @@ export function Pricing({ onSignup }: Props) {
           Um plano, <span className="gradient-text">tudo incluso</span>
         </h2>
         <p className="section-subtitle pricing-lead" data-aos="fade-up" data-aos-delay="200">
-          <strong>R$ 99,00 por mês.</strong> Modelo pré-pago: <strong>pagou, usou</strong>. Com a mensalidade em dia você mantém o acesso completo ao sistema. Sem taxas escondidas, sem fidelidade. Teste grátis por 7 dias antes de assinar.
+          <strong>R$ 149,00 por mês.</strong> Modelo pré-pago: <strong>pagou, usou</strong>. Com a mensalidade em dia você mantém o acesso completo ao sistema. Sem taxas escondidas, sem fidelidade. Teste grátis por 7 dias antes de assinar.
         </p>
 
         <div className="pricing-grid pricing-grid--single">
@@ -34,7 +34,7 @@ export function Pricing({ onSignup }: Props) {
             <div className="plan-desc">Plano único para sua clínica</div>
             <div className="plan-price">
               <span className="currency">R$</span>
-              <span className="amount">99,00</span>
+              <span className="amount">149,00</span>
               <span className="period">/mês</span>
             </div>
             <p className="plan-prepaid-note">Cobrança mensal. Enquanto estiver pago, você usa à vontade.</p>
