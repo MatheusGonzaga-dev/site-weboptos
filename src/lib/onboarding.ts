@@ -73,6 +73,8 @@ const ERROR_MAP: Record<string, string> = {
   cnpj_lookup_failed: 'Serviço de consulta indisponível. Tente de novo em instantes.',
   EMAIL_INVALID: 'E-mail inválido.',
   PASSWORD_TOO_SHORT: 'Senha deve ter no mínimo 8 caracteres.',
+  TELEFONE_REQUIRED: 'Telefone (WhatsApp) é obrigatório. Informe DDD + número.',
+  ENDERECO_REQUIRED: 'Endereço é obrigatório. Informe CEP, logradouro e bairro.',
   SUPABASE_PROJECT_LIMIT_REACHED: 'Limite de projetos Supabase atingido. Tente novamente mais tarde.',
   SUPABASE_RATE_LIMITED: 'Muitas requisições. Aguarde alguns minutos e tente de novo.',
   too_many_attempts: 'Muitas tentativas. Aguarde e tente novamente.',

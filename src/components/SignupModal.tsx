@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { formatDoc, isValidCpf, isValidCnpj } from '@/lib/formatters';
+import { formatDoc, isValidCpf, isValidCnpj, formatTelefone, formatCep } from '@/lib/formatters';
 import {
   lookupCnpj,
   submitOnboardingAsync,
   loginPainelSession,
   buildSistemaAutologinUrl,
   sistemaLoginUrl,
-  type CnpjLookup,
   type OnboardingJob,
 } from '@/lib/onboarding';
 
@@ -17,10 +16,18 @@ export function SignupModal({ open, onClose }: Props) {
   const [step, setStep] = useState<Step>(1);
   const [docInput, setDocInput] = useState('');
   const [loadingCnpj, setLoadingCnpj] = useState(false);
-  const [empresa, setEmpresa] = useState<CnpjLookup | null>(null);
   const [manualMode, setManualMode] = useState(false);
   const [razao, setRazao] = useState('');
   const [fantasia, setFantasia] = useState('');
+  // Contato + endereço (obrigatórios — exigidos pelo checkout do Asaas). Telefone/CEP em dígitos.
+  const [telefone, setTelefone] = useState('');
+  const [cep, setCep] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numero, setNumero] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
+  const [buscandoCep, setBuscandoCep] = useState(false);
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -37,10 +44,17 @@ export function SignupModal({ open, onClose }: Props) {
     setStep(1);
     setDocInput('');
     setLoadingCnpj(false);
-    setEmpresa(null);
     setManualMode(false);
     setRazao('');
     setFantasia('');
+    setTelefone('');
+    setCep('');
+    setLogradouro('');
+    setNumero('');
+    setBairro('');
+    setCidade('');
+    setUf('');
+    setBuscandoCep(false);
     setNome('');
     setEmail('');
     setPassword('');
@@ -88,7 +102,6 @@ export function SignupModal({ open, onClose }: Props) {
         return;
       }
       setError(null);
-      setEmpresa(null);
       setManualMode(true);
       setRazao('');
       setFantasia('');
@@ -103,11 +116,21 @@ export function SignupModal({ open, onClose }: Props) {
     setLoadingCnpj(true);
     try {
       const data = await lookupCnpj(docDigits);
-      setEmpresa(data);
       setManualMode(false);
       setRazao(data.razaoSocial);
       setFantasia(data.nomeFantasia || data.razaoSocial);
       if (data.email) setEmail(data.email);
+      // Pré-preenche contato/endereço com o que veio da Receita (editável).
+      if (data.telefone) setTelefone(data.telefone.replace(/\D/g, '').slice(0, 11));
+      const ed = data.endereco;
+      if (ed) {
+        if (ed.cep) setCep(ed.cep.replace(/\D/g, '').slice(0, 8));
+        if (ed.logradouro) setLogradouro(ed.logradouro);
+        if (ed.numero) setNumero(ed.numero);
+        if (ed.bairro) setBairro(ed.bairro);
+        if (ed.municipio) setCidade(ed.municipio);
+        if (ed.uf) setUf(ed.uf);
+      }
       setStep(2);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao consultar CNPJ.');
@@ -118,17 +141,55 @@ export function SignupModal({ open, onClose }: Props) {
 
   const enterManualMode = () => {
     setError(null);
-    setEmpresa(null);
     setManualMode(true);
     setRazao('');
     setFantasia('');
     setStep(2);
   };
 
+  const buscarCep = async (digits: string) => {
+    if (digits.length !== 8) return;
+    setBuscandoCep(true);
+    try {
+      const r = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+      const d = (await r.json()) as Record<string, string>;
+      if (!d.erro) {
+        if (d.logradouro) setLogradouro(d.logradouro);
+        if (d.bairro) setBairro(d.bairro);
+        if (d.localidade) setCidade(d.localidade);
+        if (d.uf) setUf(d.uf);
+      }
+    } catch {
+      /* sem autopreenchimento: usuário digita manualmente */
+    } finally {
+      setBuscandoCep(false);
+    }
+  };
+
   const handleEmpresaNext = (e: FormEvent) => {
     e.preventDefault();
     if (!razao.trim()) {
       setError(isCpf ? 'Informe seu nome completo.' : 'Razão social é obrigatória.');
+      return;
+    }
+    if (telefone.length < 10) {
+      setError('Informe um telefone (WhatsApp) com DDD.');
+      return;
+    }
+    if (cep.length !== 8) {
+      setError('Informe um CEP válido (8 dígitos).');
+      return;
+    }
+    if (!logradouro.trim()) {
+      setError('Informe o logradouro (rua/avenida).');
+      return;
+    }
+    if (!numero.trim()) {
+      setError('Informe o número.');
+      return;
+    }
+    if (!bairro.trim()) {
+      setError('Informe o bairro.');
       return;
     }
     setError(null);
@@ -146,6 +207,16 @@ export function SignupModal({ open, onClose }: Props) {
     setProgressJob(null);
     setStep(4);
 
+    const enderecoPayload = {
+      cep,
+      logradouro: logradouro.trim(),
+      numero: numero.trim(),
+      complemento: '',
+      bairro: bairro.trim(),
+      municipio: cidade.trim(),
+      uf: uf.trim().toUpperCase(),
+    };
+
     try {
       await submitOnboardingAsync(
         {
@@ -154,8 +225,8 @@ export function SignupModal({ open, onClose }: Props) {
             tipoPessoa: isCpf ? 'fisica' : 'juridica',
             razaoSocial: razao.trim(),
             nomeFantasia: fantasia.trim() || razao.trim(),
-            telefone: empresa?.telefone,
-            endereco: empresa?.endereco,
+            telefone,
+            endereco: enderecoPayload,
           },
           admin: { nome: nome.trim(), email: email.trim().toLowerCase(), senha: password },
         },
@@ -169,8 +240,8 @@ export function SignupModal({ open, onClose }: Props) {
           cnpj: docDigits,
           razaoSocial: razao.trim(),
           nomeFantasia: fantasia.trim() || razao.trim(),
-          telefone: empresa?.telefone,
-          endereco: empresa?.endereco,
+          telefone,
+          endereco: enderecoPayload,
         };
         window.location.assign(buildSistemaAutologinUrl(session, empresaSnap));
       } catch (loginErr) {
@@ -274,6 +345,59 @@ export function SignupModal({ open, onClose }: Props) {
                 onChange={(e) => setFantasia(e.target.value)}
                 placeholder="Como sua clínica é conhecida"
               />
+            </div>
+            <div className="wo-field">
+              <label htmlFor="wo-telefone">Telefone (WhatsApp)</label>
+              <input
+                id="wo-telefone"
+                type="text"
+                inputMode="numeric"
+                autoComplete="tel"
+                value={formatTelefone(telefone)}
+                onChange={(e) => setTelefone(e.target.value.replace(/\D/g, '').slice(0, 11))}
+                placeholder="(11) 99999-9999"
+              />
+            </div>
+            <div className="wo-field">
+              <label htmlFor="wo-cep">CEP</label>
+              <input
+                id="wo-cep"
+                type="text"
+                inputMode="numeric"
+                autoComplete="postal-code"
+                value={formatCep(cep)}
+                onChange={(e) => {
+                  const d = e.target.value.replace(/\D/g, '').slice(0, 8);
+                  setCep(d);
+                  if (d.length === 8) void buscarCep(d);
+                }}
+                placeholder="00000-000"
+              />
+              {buscandoCep && <span className="wo-field-hint">Buscando endereço…</span>}
+            </div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div className="wo-field" style={{ flex: 1 }}>
+                <label htmlFor="wo-logradouro">Logradouro</label>
+                <input id="wo-logradouro" type="text" autoComplete="address-line1" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} placeholder="Rua / Avenida" />
+              </div>
+              <div className="wo-field" style={{ width: 110 }}>
+                <label htmlFor="wo-numero">Número</label>
+                <input id="wo-numero" type="text" inputMode="numeric" value={numero} onChange={(e) => setNumero(e.target.value)} placeholder="123" />
+              </div>
+            </div>
+            <div className="wo-field">
+              <label htmlFor="wo-bairro">Bairro</label>
+              <input id="wo-bairro" type="text" autoComplete="address-level3" value={bairro} onChange={(e) => setBairro(e.target.value)} placeholder="Bairro" />
+            </div>
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div className="wo-field" style={{ flex: 1 }}>
+                <label htmlFor="wo-cidade">Cidade</label>
+                <input id="wo-cidade" type="text" autoComplete="address-level2" value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" />
+              </div>
+              <div className="wo-field" style={{ width: 90 }}>
+                <label htmlFor="wo-uf">UF</label>
+                <input id="wo-uf" type="text" maxLength={2} value={uf} onChange={(e) => setUf(e.target.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 2))} placeholder="SP" />
+              </div>
             </div>
             <div className="wo-signup-actions">
               <button type="button" className="wo-btn wo-btn-ghost" onClick={() => { setError(null); setStep(1); }}>Voltar</button>
