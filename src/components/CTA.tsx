@@ -12,7 +12,7 @@ export function CTA({ onSignup }: Props) {
             <span className="gradient-text">sua clínica?</span>
           </h2>
           <p>
-            Experimente todas as funções por 7 dias, sem cartão e sem fidelidade. Veja na prática como organizar agenda, prontuário e financeiro em um só lugar.
+            Experimente todas as funções por 7 dias, sem fidelidade. Veja na prática como organizar agenda, prontuário e financeiro em um só lugar.
           </p>
           <div className="cta-actions">
             <a
@@ -27,7 +27,7 @@ export function CTA({ onSignup }: Props) {
             <a href="#contact" className="btn-ghost btn-lg">Falar com especialista</a>
           </div>
           <p className="cta-note">
-            <span>Sem cartão de crédito</span>
+            <span>Plano de assinatura</span>
             <span>Cancele quando quiser</span>
             <span>Suporte 24 horas</span>
           </p>

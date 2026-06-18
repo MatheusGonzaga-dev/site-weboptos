@@ -30,7 +30,7 @@ export function Hero({ onSignup }: Props) {
             </div>
             <p className="hero-trust-text">
               <strong>Menos planilha, mais tempo com o paciente.</strong> Agenda, prontuário e financeiro integrados em uma plataforma feita para clínicas de visão.{' '}
-              <span className="hero-trust-muted">Teste grátis por 7 dias, sem cartão.</span>
+              <span className="hero-trust-muted">Teste grátis por 7 dias. Cancele quando quiser.</span>
             </p>
           </div>
         </div>

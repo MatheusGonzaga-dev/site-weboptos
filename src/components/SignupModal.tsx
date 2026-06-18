@@ -202,7 +202,7 @@ export function SignupModal({ open, onClose }: Props) {
         )}
 
         <h2 id="wo-signup-title">Criar sua conta</h2>
-        <p className="wo-modal-sub">Trial 7 dias · Sem cartão de crédito</p>
+        <p className="wo-modal-sub">Trial 7 dias · Cancele quando quiser</p>
 
         {step !== 4 && (
           <div className="wo-signup-steps" aria-hidden="true">
