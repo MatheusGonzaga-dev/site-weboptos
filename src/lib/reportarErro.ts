@@ -76,13 +76,60 @@ export function reportarErro(origem: string, erro: unknown, detalhe?: string): v
   }
 }
 
-/** Liga a captura global. Chamar uma vez, no boot da aplicação. */
+/**
+ * Assinaturas de codigo que NAO e nosso. O capturador global pega TUDO que estoura na
+ * pagina: navegador embutido de app de celular (Instagram/LinkedIn no iOS injetam um script
+ * que fala com o app nativo por `webkit.messageHandlers`), extensao do navegador, tag de
+ * marketing. Sem filtro, visitante que abre pelo Instagram vira alerta no WhatsApp do dev e
+ * chamado no painel — por um defeito que nao existe e que nao temos como consertar.
+ *
+ * Foi o caso da demanda #23 (06/08/2026): `sendDataToNative` e `sendPageHideMessage` nao
+ * existem em lugar nenhum do repositorio.
+ *
+ * Gemeo de server/src/lib/ruidoDeTerceiro.ts, que aplica a MESMA regra do lado do servidor —
+ * e e o que vale para o bundle antigo que ja esta carregado no navegador do visitante.
+ */
+const RUIDO_EXTERNO = [
+  /webkit\.messageHandlers/i,
+  /\bsendDataToNative\b/i,
+  /\bsendPageHideMessage\b/i,
+  /\b(?:chrome|moz|safari|safari-web|ms-browser)-extension:\/\//i,
+  /\bwebkit-masked-url:/i,
+];
+
+function ehRuidoDeTerceiro(mensagem: string, pistas: string): boolean {
+  const tudo = `${mensagem}\n${pistas}`;
+  if (RUIDO_EXTERNO.some((re) => re.test(tudo))) return true;
+  // Erro cross-origin opaco: o navegador esconde mensagem, arquivo e linha.
+  if (/^script error\.?$/i.test(mensagem.trim())) return true;
+  // Nosso codigo e sempre publicado como arquivo .js. Pilha que cita URLs e nenhuma delas e
+  // arquivo de script = codigo embutido no documento, ou seja, injetado. So vale quando ha
+  // URL para julgar: sem pilha a gente relata, porque perder quebra real e pior.
+  if (/https?:\/\/\S+/.test(pistas) && !/\.[mc]?js\b/i.test(pistas)) return true;
+  return false;
+}
+
+/**
+ * Liga a captura global. Chamar uma vez, no boot da aplicacao.
+ *
+ * O filtro fica AQUI e nao dentro de reportarErro(): chamada manual de reportarErro e nossa
+ * por definicao e nunca deve ser descartada. Quem precisa de desconfianca e a captura
+ * automatica, que recolhe o que qualquer script da pagina jogar para cima.
+ */
 export function instalarCapturaDeErros(): void {
   window.addEventListener('error', (ev) => {
-    reportarErro('erro não tratado', ev.error || ev.message);
+    const erro = ev.error;
+    const mensagem = erro instanceof Error ? erro.message : String(ev.message || '');
+    const pistas = `${ev.filename || ''}\n${erro instanceof Error ? erro.stack || '' : ''}`;
+    if (ehRuidoDeTerceiro(mensagem, pistas)) return;
+    reportarErro('erro não tratado', erro || ev.message);
   });
 
   window.addEventListener('unhandledrejection', (ev) => {
-    reportarErro('promise rejeitada', ev.reason);
+    const razao = ev.reason;
+    const mensagem = razao instanceof Error ? razao.message : String(razao ?? '');
+    const pistas = razao instanceof Error ? razao.stack || '' : '';
+    if (ehRuidoDeTerceiro(mensagem, pistas)) return;
+    reportarErro('promise rejeitada', razao);
   });
 }
