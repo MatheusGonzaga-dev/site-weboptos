@@ -4,6 +4,8 @@ type WeboptosConfig = {
   apiUrl?: string;
   sistemaUrl?: string;
   painelOnly?: boolean;
+  /** Painel da WebOptos, que guarda o contador de visitas (lib/medicao.ts). */
+  painelUrl?: string;
 };
 
 declare global {
@@ -37,6 +39,14 @@ export function sistemaBaseUrl(): string {
   const fromEnv = (import.meta.env.VITE_SISTEMA_URL as string | undefined)?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, '');
   return (isLocalHost() ? 'http://localhost:8080' : 'https://app.weboptos.com.br').replace(/\/$/, '');
+}
+
+export function painelBaseUrl(): string {
+  const fromCfg = fromWindow().painelUrl;
+  if (fromCfg) return String(fromCfg).replace(/\/$/, '');
+  const fromEnv = (import.meta.env.VITE_PAINEL_URL as string | undefined)?.trim();
+  if (fromEnv) return fromEnv.replace(/\/$/, '');
+  return (isLocalHost() ? 'http://localhost:3333' : 'https://painel.weboptos.com.br').replace(/\/$/, '');
 }
 
 export function painelOnly(): boolean {

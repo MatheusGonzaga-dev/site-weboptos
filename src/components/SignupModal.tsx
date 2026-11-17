@@ -8,6 +8,7 @@ import {
   sistemaLoginUrl,
   type OnboardingJob,
 } from '@/lib/onboarding';
+import { registrarEvento } from '@/lib/medicao';
 
 type Props = { open: boolean; onClose: () => void };
 type Step = 1 | 2 | 3 | 4;
@@ -67,6 +68,7 @@ export function SignupModal({ open, onClose }: Props) {
   useEffect(() => {
     if (!open) return;
     reset();
+    registrarEvento('cadastro_aberto');
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
@@ -105,6 +107,7 @@ export function SignupModal({ open, onClose }: Props) {
       setManualMode(true);
       setRazao('');
       setFantasia('');
+      registrarEvento('cadastro_etapa', 'empresa');
       setStep(2);
       return;
     }
@@ -131,6 +134,7 @@ export function SignupModal({ open, onClose }: Props) {
         if (ed.municipio) setCidade(ed.municipio);
         if (ed.uf) setUf(ed.uf);
       }
+      registrarEvento('cadastro_etapa', 'empresa');
       setStep(2);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao consultar CNPJ.');
@@ -144,6 +148,7 @@ export function SignupModal({ open, onClose }: Props) {
     setManualMode(true);
     setRazao('');
     setFantasia('');
+    registrarEvento('cadastro_etapa', 'empresa');
     setStep(2);
   };
 
@@ -193,6 +198,7 @@ export function SignupModal({ open, onClose }: Props) {
       return;
     }
     setError(null);
+    registrarEvento('cadastro_etapa', 'responsavel');
     setStep(3);
   };
 
@@ -203,6 +209,7 @@ export function SignupModal({ open, onClose }: Props) {
     if (password.length < 8) { setError('Senha com no mínimo 8 caracteres.'); return; }
 
     setError(null);
+    registrarEvento('cadastro_enviado');
     setSubmitting(true);
     setProgressJob(null);
     setStep(4);
@@ -232,6 +239,8 @@ export function SignupModal({ open, onClose }: Props) {
         },
         (job) => setProgressJob(job),
       );
+      // Conta criada de verdade no painel. O beacon sobrevive à ida para o app logo abaixo.
+      registrarEvento('cadastro_concluido');
 
       const emailNorm = email.trim().toLowerCase();
       try {
@@ -249,6 +258,7 @@ export function SignupModal({ open, onClose }: Props) {
         window.location.href = sistemaLoginUrl(emailNorm);
       }
     } catch (err) {
+      registrarEvento('cadastro_erro');
       setSubmitting(false);
       setError(err instanceof Error ? err.message : 'Erro ao criar conta.');
       setStep(3);
